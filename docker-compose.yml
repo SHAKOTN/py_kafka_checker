@@ -1,8 +1,18 @@
 version: "3.4"
 
 services:
-  fetch:
+  consume:
     build:
       context: .
       target: production
       dockerfile: Dockerfile
+    volumes:
+      - .:/app
+
+  produce:
+    build:
+      context: .
+      target: production
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
