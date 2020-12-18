@@ -4,7 +4,7 @@ services:
   consume:
     build:
       context: .
-      target: local
+      target: production
       dockerfile: Dockerfile
     volumes:
       - .:/app
@@ -12,7 +12,7 @@ services:
   produce:
     build:
       context: .
-      target: local
+      target: production
       dockerfile: Dockerfile
     volumes:
       - .:/app
