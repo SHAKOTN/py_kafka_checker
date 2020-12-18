@@ -6,6 +6,10 @@ services:
       context: .
       target: production
       dockerfile: Dockerfile
+    environment:
+      POSTGRES_USER: aiven
+      POSTGRES_PASSWORD: aiven
+      POSTGRES_DB: aiven_default
     volumes:
       - .:/app
 

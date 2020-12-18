@@ -18,8 +18,7 @@ ADD main.py /app/main.py
 WORKDIR /app
 
 FROM base as local
-CMD ["/app/main.py"]
-ENTRYPOINT ["python"]
+CMD ["python", "/app/main.py"]
 
 FROM base as test-base
 
