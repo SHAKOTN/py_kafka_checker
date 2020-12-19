@@ -17,6 +17,7 @@ services:
     networks:
       - default
     command: ["python", "consumer.py"]
+    restart: on-failure:5
     volumes:
       - .:/app
 

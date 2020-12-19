@@ -2,7 +2,6 @@ import json
 import logging
 import os
 import threading
-from typing import Dict
 
 from kafka import KafkaConsumer
 
@@ -10,11 +9,8 @@ from consumer.database import Session
 
 logger = logging.getLogger(__name__)
 
-def insert_metadata_to_db(message: Dict) -> None:
-    pass
-
 def consume_messages() -> None:
-    logger.warning(f"Started listener process {threading.get_ident()}")
+    logger.warning(f"Started listener {threading.get_ident()}")
     kafka_consumer = KafkaConsumer(
         os.getenv('KAFKA_TOPIC'),
         bootstrap_servers=os.getenv('KAFKA_HOST'),
@@ -32,8 +28,13 @@ def consume_messages() -> None:
     # Acquire session so it will stay alive while fetching new messages
     with Session() as session:
         for message in kafka_consumer:
+            logger.warning(f"Message received: {message.value}")
             session.execute(
                 "INSERT INTO website_metrics(url, content, response_time, code) VALUES (%s, %s, %s, %s)",
-                (message['url'], message['content'], message['response_time'], message['code'])
+                (
+                    message.value['url'],
+                    message.value['content'],
+                    message.value['response_time'],
+                    message.value['code'])
             )
             session.commit()

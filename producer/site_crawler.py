@@ -1,6 +1,7 @@
 import logging
 import os
 from dataclasses import dataclass
+from typing import List
 
 import requests
 
@@ -13,14 +14,20 @@ class SiteMetadata:
     response_time: float
     code: int
 
-def get_site_metadata() -> SiteMetadata:
-    try:
-        response = requests.get(os.getenv("SITE_URL"))
-        return SiteMetadata(
-            url=response.url,
-            content=response.text[:100],
-            response_time=response.elapsed.total_seconds(),
-            code=response.status_code,
-        )
-    except requests.ConnectionError as exc:
-        logger.exception(f"Can't reach resource: {exc.response}")
+def get_sites_metadata() -> List[SiteMetadata]:
+    site_urls = os.getenv("SITE_URLS").split(",")
+    sites = []
+    for url in site_urls:
+        try:
+            response = requests.get(url)
+        except requests.ConnectionError as exc:
+            logger.exception(f"Can't reach resource: {exc.response}")
+            continue
+        else:
+            sites.append(SiteMetadata(
+                url=response.url,
+                content=response.text[:100],
+                response_time=response.elapsed.total_seconds(),
+                code=response.status_code,
+            ))
+    return sites

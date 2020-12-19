@@ -14,6 +14,7 @@ def psycopg2_connect_fixture(mocker):
         return_value=MagicMock()
     )
 
+
 @pytest.fixture
 def psycopg2_session_exception_on_commit(mocker, psycopg2_connect_fixture):
     mocker.patch(
@@ -21,10 +22,14 @@ def psycopg2_session_exception_on_commit(mocker, psycopg2_connect_fixture):
         side_effect=Exception("")
     )
 
+
 @pytest.fixture
 def migrate_table():
     drop_metrics_table()
     migrate_metrics_table()
+    yield
+    drop_metrics_table()
+
 
 @pytest.fixture
 def populate_table_with_test_data(migrate_table):
@@ -43,9 +48,11 @@ def consumer_mocked(mocker):
     mocker.patch(
         "consumer.consumer.KafkaConsumer",
         return_value=[
-            {'url': 'https://www.google.com/',
-             'content': '<!doctype html><html itemscope=""',
-             'response_time': 0.152716,
-             'code': 200}
+            MagicMock(value={
+                'url': 'https://www.google.com/',
+                'content': '<!doctype html><html itemscope=""',
+                'response_time': 0.152716,
+                'code': 200
+            })
         ]
     )
