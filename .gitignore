@@ -19,7 +19,7 @@ pip-delete-this-directory.txt
 *.swp
 
 # Environments
-.env
+#.env
 .venv
 env/
 venv/
