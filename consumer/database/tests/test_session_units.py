@@ -26,7 +26,7 @@ def test_connection_commit_is_called(psycopg2_connect_fixture):
     with Session() as session:
         session.commit()
 
-    assert session._connection.commit.call_count == 1
+    assert session._connection.commit.call_count == 2
 
 def test_cursor_execute_is_called(psycopg2_connect_fixture):
     with Session() as session:
