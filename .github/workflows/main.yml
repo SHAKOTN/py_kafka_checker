@@ -29,5 +29,7 @@ jobs:
       run: docker ps
 
     - name: Run tests
-      run: docker-compose run consume pytest --cov=/consumer
+      run: docker-compose -f docker-compose-ci.yml run consume pytest --cov=.
 
+    - name: Run tests
+      run: docker-compose -f docker-compose-ci.yml run produce pytest --cov=.

@@ -1,0 +1,44 @@
+version: "3.4"
+
+services:
+  consume:
+    build:
+      context: .
+      target: local
+      dockerfile: consumer/Dockerfile
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: aiven
+      POSTGRES_PASSWORD: aiven
+      POSTGRES_DB: aiven_default
+    networks:
+      - default
+
+  produce:
+    build:
+      context: .
+      target: local
+      dockerfile: producer/Dockerfile
+    networks:
+      - default
+
+  db:
+    environment:
+      POSTGRES_USER: aiven
+      POSTGRES_PASSWORD: aiven
+      POSTGRES_DB: aiven_default
+    image: postgres:11.6-alpine
+    networks:
+      - default
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aiven -d aiven"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
