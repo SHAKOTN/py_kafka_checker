@@ -3,6 +3,7 @@ import os
 from typing import Any
 from typing import Iterable
 from typing import Optional
+from typing import Tuple
 
 import psycopg2
 
@@ -13,18 +14,28 @@ class Session:
         self._connection = None
         self._cursor = None
 
-    def execute(self, sql: str, values: Optional[Iterable[Any]] = None) -> None:
-        self._cursor.execute(sql, values)
+    def fetch_all(self, sql: str, values: Optional[Iterable[Any]] = None) -> Tuple[Any]:
+        self.execute(sql, values)
+        return self._cursor.fetchall()
 
-    def commit(self):
+    def fetch_one(self, sql: str, values: Optional[Iterable[Any]] = None) -> Tuple[Any]:
+        self.execute(sql, values)
+        return self._cursor.fetchone()
+
+    def execute(self, sql: str, values: Optional[Iterable[Any]] = None) -> None:
+        return self._cursor.execute(sql, values)
+
+    def commit(self) -> None:
         self._connection.commit()
 
     def __enter__(self):
-        self._connect()
+        if not self._connection:
+            self._connect()
         return self
 
     def __exit__(self, exception_type, exception_value, trace):
-        # Exit is transactional, in case of any exception - transaction will be rolled back
+        # Exit is transactional, in case of any exception:
+        # All not committed changes will be rolled back
         if exception_type is not None:
             self._connection.rollback()
             logger.error(f"DB exception: {exception_value}")

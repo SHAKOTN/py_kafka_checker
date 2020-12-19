@@ -13,7 +13,8 @@ ADD requirements/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 RUN rm -f /app/requirements.txt
 
-ADD main.py /app/main.py
+ADD consumer /app/consumer/
+ADD producer /app/producer/
 
 WORKDIR /app
 

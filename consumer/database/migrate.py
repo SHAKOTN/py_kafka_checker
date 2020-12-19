@@ -15,9 +15,16 @@ def migrate_metrics_table():
     """
 
     create_index_query = """
-        create index url_ix
+        create index if not exists url_status_code_idx
         on website_metrics (url, code);
     """
     with Session() as session:
         session.execute(create_table_query)
         session.execute(create_index_query)
+        session.commit()
+
+def drop_metrics_table():
+    with Session() as session:
+        session.execute("drop table if exists website_metrics;")
+        session.execute("drop index if exists url_status_code_idx;")
+        session.commit()

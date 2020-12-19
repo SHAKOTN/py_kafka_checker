@@ -10,13 +10,9 @@ services:
       POSTGRES_USER: aiven
       POSTGRES_PASSWORD: aiven
       POSTGRES_DB: aiven_default
-    volumes:
-      - .:/app
 
   produce:
     build:
       context: .
       target: production
       dockerfile: Dockerfile
-    volumes:
-      - .:/app

@@ -1,4 +1,5 @@
 /postgres-data/
+.pytest_cache/
 *.pyc
 *.pyo
 *.scssc
