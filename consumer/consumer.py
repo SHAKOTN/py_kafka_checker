@@ -18,7 +18,7 @@ def consume_messages() -> None:
         os.getenv('KAFKA_TOPIC'),
         bootstrap_servers=os.getenv('KAFKA_HOST'),
         enable_auto_commit=True,
-        value_deserializer=lambda payload: json.loads(payload.decode('utf8')),
+        value_deserializer=lambda data: json.loads(data.decode('utf8')),
         group_id="metrics_consumer",
         security_protocol="SSL",
         # TODO: Move cert files to S3 or other storage. For now, leaving them here, but they are
@@ -28,9 +28,5 @@ def consume_messages() -> None:
         ssl_keyfile="certificates/service.key"
     )
     with Session() as session:
-        while True:
-            for message in kafka_consumer:
-                pass
-
-# if __name__ == '__main__':
-#     consume_messages()
+        for message in kafka_consumer:
+            pass
