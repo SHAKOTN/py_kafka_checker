@@ -1,9 +1,11 @@
-import pytest
 from unittest.mock import MagicMock
 
+import pytest
+
 from consumer.database import Session
-from consumer.database.migrate import migrate_metrics_table
 from consumer.database.migrate import drop_metrics_table
+from consumer.database.migrate import migrate_metrics_table
+
 
 @pytest.fixture
 def psycopg2_connect_fixture(mocker):
@@ -34,3 +36,16 @@ def populate_table_with_test_data(migrate_table):
             ("http://google.com", "some_content", 1.42, 200)
         )
         session.commit()
+
+
+@pytest.fixture
+def consumer_mocked(mocker):
+    mocker.patch(
+        "consumer.consumer.KafkaConsumer",
+        return_value=[
+            {'url': 'https://www.google.com/',
+             'content': '<!doctype html><html itemscope=""',
+             'response_time': 0.152716,
+             'code': 200}
+        ]
+    )

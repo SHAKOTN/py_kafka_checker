@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import threading
+from typing import Dict
 
 from kafka import KafkaConsumer
 
@@ -9,7 +10,7 @@ from consumer.database import Session
 
 logger = logging.getLogger(__name__)
 
-def insert_to_database() -> None:
+def insert_metadata_to_db(message: Dict) -> None:
     pass
 
 def consume_messages() -> None:
@@ -27,6 +28,12 @@ def consume_messages() -> None:
         ssl_certfile="certificates/service.cert",
         ssl_keyfile="certificates/service.key"
     )
+
+    # Acquire session so it will stay alive while fetching new messages
     with Session() as session:
         for message in kafka_consumer:
-            pass
+            session.execute(
+                "INSERT INTO website_metrics(url, content, response_time, code) VALUES (%s, %s, %s, %s)",
+                (message['url'], message['content'], message['response_time'], message['code'])
+            )
+            session.commit()
