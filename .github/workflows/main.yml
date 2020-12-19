@@ -22,7 +22,7 @@ jobs:
     - name: Build docker images
       run: docker-compose build
 
-    - name: Build the docker-compose stack
+    - name: Build the docker-compose stack postgres
       run: docker-compose -f docker-compose.yml up -d db
 
     - name: PS docker containers
