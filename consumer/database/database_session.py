@@ -23,7 +23,7 @@ class Session:
         return self._cursor.fetchone()
 
     def execute(self, sql: str, values: Optional[Iterable[Any]] = None) -> None:
-        return self._cursor.execute(sql, values)
+        self._cursor.execute(sql, values)
 
     def commit(self) -> None:
         self._connection.commit()

@@ -5,15 +5,18 @@ services:
     build:
       context: .
       target: local
-      dockerfile: Dockerfile
+      dockerfile: consumer/Dockerfile
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       POSTGRES_USER: aiven
       POSTGRES_PASSWORD: aiven
       POSTGRES_DB: aiven_default
     networks:
       - default
+    command: ["python", "consumer.py"]
     volumes:
       - .:/app
 
@@ -21,7 +24,10 @@ services:
     build:
       context: .
       target: local
-      dockerfile: Dockerfile
+      dockerfile: producer/Dockerfile
+    networks:
+      - default
+    command: ["python", "producer.py"]
     volumes:
       - .:/app
 

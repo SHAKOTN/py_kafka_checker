@@ -5,14 +5,10 @@ services:
     build:
       context: .
       target: production
-      dockerfile: Dockerfile
-    environment:
-      POSTGRES_USER: aiven
-      POSTGRES_PASSWORD: aiven
-      POSTGRES_DB: aiven_default
+      dockerfile: consumer/Dockerfile
 
   produce:
     build:
       context: .
       target: production
-      dockerfile: Dockerfile
+      dockerfile: consumer/Dockerfile

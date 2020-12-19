@@ -1,4 +1,4 @@
-from consumer.database import Session
+from consumer.database.database_session import Session
 
 
 def migrate_metrics_table():

@@ -4,25 +4,22 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONPATH=/app
 
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev bash
+RUN apk update && apk add gcc python3-dev musl-dev libffi-dev bash
 
 RUN pip install --upgrade pip
 RUN pip install dumb-init==1.2.2
 
-ADD requirements/requirements.txt /app/requirements.txt
+ADD producer/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 RUN rm -f /app/requirements.txt
 
-ADD consumer /app/consumer/
 ADD producer /app/producer/
 
 WORKDIR /app
 
 FROM base as local
-CMD ["python", "/app/main.py"]
 
 FROM base as test-base
 
 FROM base as production
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
-CMD ["python", "/app/main.py"]
