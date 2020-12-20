@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def consume_messages() -> None:
     logger.warning(f"Started listener {threading.get_ident()}")
     kafka_consumer = KafkaConsumer(
-        os.getenv('KAFKA_TOPIC'),
+        os.getenv('KAFKA_TOPIC', 'metrics'),
         bootstrap_servers=os.getenv('KAFKA_HOST'),
         enable_auto_commit=True,
         value_deserializer=lambda data: json.loads(data.decode('utf8')),

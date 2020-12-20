@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 def produce_messages() -> None:
     logger.warning(f"Started producer {threading.get_ident()}")
-    transport = KafkaProducer(
+    kafka_producer = KafkaProducer(
         bootstrap_servers=os.getenv('KAFKA_HOST'),
         security_protocol="SSL",
         ssl_cafile="certificates/ca.pem",
@@ -21,8 +21,11 @@ def produce_messages() -> None:
         value_serializer=lambda data: json.dumps(data).encode('utf-8')
     )
     while True:
-        sites_data = get_sites_metadata()
-        if sites_data:
-            for site_data in sites_data:
-                transport.send(os.getenv("KAFKA_TOPIC"), value=site_data.__dict__)
+        send_message(kafka_producer)
         sleep(30)
+
+def send_message(transport: KafkaProducer):
+    sites_data = get_sites_metadata()
+    if sites_data:
+        for site_data in sites_data:
+            transport.send(os.getenv("KAFKA_TOPIC", 'metrics'), value=site_data.__dict__)
