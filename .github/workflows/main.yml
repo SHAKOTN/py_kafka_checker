@@ -8,7 +8,7 @@ jobs:
     name: Run test suite
     runs-on: ubuntu-latest
     env:
-      COMPOSE_FILE: docker-compose.yml
+      COMPOSE_FILE: docker-compose-ci.yml
       DOCKER_USER: ${{ secrets.DOCKER_USER }}
       DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 
@@ -23,10 +23,10 @@ jobs:
       run: mkdir certificates
 
     - name: Build docker images
-      run: docker-compose build
+      run: docker-compose -f docker-compose-ci.yml build
 
     - name: Build the docker-compose stack postgres
-      run: docker-compose -f docker-compose.yml up -d db
+      run: docker-compose -f docker-compose-ci.yml up -d db
 
     - name: PS docker containers
       run: docker ps

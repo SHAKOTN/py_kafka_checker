@@ -8,8 +8,6 @@ services:
       dockerfile: consumer/Dockerfile
     depends_on:
       - db
-    env_file:
-      - .env
     environment:
       POSTGRES_USER: aiven
       POSTGRES_PASSWORD: aiven
