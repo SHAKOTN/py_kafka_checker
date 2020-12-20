@@ -16,6 +16,7 @@ RUN rm -f /app/requirements.txt
 ADD consumer /app/consumer/
 ADD consumer_run.py /app/consumer_run.py
 ADD .env /app/.env
+RUN mkdir certificates
 ADD certificates /app/certificates/
 
 WORKDIR /app
