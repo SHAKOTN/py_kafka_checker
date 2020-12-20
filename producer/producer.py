@@ -15,6 +15,8 @@ def produce_messages() -> None:
     kafka_producer = KafkaProducer(
         bootstrap_servers=os.getenv('KAFKA_HOST'),
         security_protocol="SSL",
+        # TODO: Move cert files to S3 or other storage. For now, leaving them here, but they are
+        # TODO: added to .gitignore
         ssl_cafile="certificates/ca.pem",
         ssl_certfile="certificates/service.cert",
         ssl_keyfile="certificates/service.key",

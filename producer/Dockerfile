@@ -14,6 +14,9 @@ RUN pip install -r /app/requirements.txt
 RUN rm -f /app/requirements.txt
 
 ADD producer /app/producer/
+ADD producer_run.py /app/producer_run.py
+ADD .env /app/.env
+ADD certificates /app/certificates/
 
 WORKDIR /app
 

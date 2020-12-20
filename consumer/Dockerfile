@@ -14,6 +14,9 @@ RUN pip install -r /app/requirements.txt
 RUN rm -f /app/requirements.txt
 
 ADD consumer /app/consumer/
+ADD consumer_run.py /app/consumer_run.py
+ADD .env /app/.env
+ADD certificates /app/certificates/
 
 WORKDIR /app
 
