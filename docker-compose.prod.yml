@@ -9,6 +9,8 @@ services:
     env_file:
       - .env
     command: ["python", "consumer_run.py"]
+    volumes:
+      - ./certificates:/app/certificates
     depends_on:
       - migrate
     restart: on-failure:5
@@ -28,6 +30,8 @@ services:
       context: .
       target: production
       dockerfile: producer/Dockerfile
+    volumes:
+      - ./certificates:/app/certificates
     env_file:
       - .env
     command: ["python", "producer_run.py"]

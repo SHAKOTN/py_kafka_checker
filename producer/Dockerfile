@@ -16,8 +16,6 @@ RUN rm -f /app/requirements.txt
 ADD producer /app/producer/
 ADD producer_run.py /app/producer_run.py
 ADD .env /app/.env
-RUN mkdir certificates
-ADD certificates /app/certificates/
 
 WORKDIR /app
 
