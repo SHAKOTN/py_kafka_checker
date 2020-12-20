@@ -1,12 +1,14 @@
 ## Kafka Consumer/Producer and Site Checker
 
 ---
-| CI Status: ![Test](https://github.com/SHAKOTN/py_kafka_checker/workflows/Test/badge.svg)   |      Latest CI runs - [Link](https://github.com/SHAKOTN/py_kafka_checker/actions?query=workflow%3ATest)      |
-|----------|:-------------:
+
+## CI and Tests
+| CI Status: ![Test](https://github.com/SHAKOTN/py_kafka_checker/workflows/Test/badge.svg) | Latest CI runs - [Link](https://github.com/SHAKOTN/py_kafka_checker/actions?query=workflow%3ATest)|
+|---|---:
 
 ---
 
-### Coverage:
+### Test Coverage:
 #### Consumer:
 ```
 Name                                         Stmts   Miss  Cover
