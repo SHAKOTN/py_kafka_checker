@@ -4,17 +4,16 @@ from typing import List
 
 import requests
 
-from producer.utils import SiteMetadata
-from producer.utils import get_sites
+from producer.site_metadata import SiteMetadata
+from producer.utils import get_sites_urls
 from producer.utils import parse_site_content
 
 logger = logging.getLogger(__name__)
 
 
 def get_sites_metadata() -> List[SiteMetadata]:
-    site_urls = get_sites()
     sites_metadata = []
-    for url in site_urls:
+    for url in get_sites_urls():
         try:
             response = requests.get(url)
         except requests.ConnectionError as exc:

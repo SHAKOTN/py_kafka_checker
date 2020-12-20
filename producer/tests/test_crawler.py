@@ -6,10 +6,10 @@ import pytest
 
 from producer.site_crawler import get_sites_metadata
 from producer.site_crawler import parse_site_content
-from producer.utils import SiteMetadata
+from producer.site_metadata import SiteMetadata
 
 
-@patch('producer.site_crawler.get_sites', return_value=["https://whatever.com"])
+@patch('producer.site_crawler.get_sites_urls', return_value=["https://whatever.com"])
 @patch('producer.site_crawler.requests.get')
 @patch.dict(os.environ, {"WEBSITE_CONTENT_REGEX": 'href=\"(http://.*?)\"'})
 @pytest.mark.parametrize("status_code,response_time", [(200, 1.00), (400, 3.14), (500, 0.24)])
@@ -28,7 +28,7 @@ def test_crawler_parametrized_with_regex(get_mock, __, status_code, response_tim
     )
     assert get_sites_metadata()[0] == expected_site_meta
 
-@patch('producer.site_crawler.get_sites', return_value=["https://whatever.com"])
+@patch('producer.site_crawler.get_sites_urls', return_value=["https://whatever.com"])
 @patch('producer.site_crawler.requests.get')
 def test_crawler_parametrized_without_regex(get_mock, __):
     get_mock.return_value = MagicMock(
