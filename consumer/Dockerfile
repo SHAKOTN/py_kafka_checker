@@ -19,7 +19,7 @@ WORKDIR /app
 
 FROM base as local
 
-FROM base as test-base
+FROM base as test
 
 FROM base as production
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]

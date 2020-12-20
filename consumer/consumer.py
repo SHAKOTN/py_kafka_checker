@@ -6,6 +6,7 @@ import threading
 from kafka import KafkaConsumer
 
 from consumer.database import Session
+from consumer.message_validator import is_valid_consumer_message
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,8 @@ def consume_messages() -> None:
     with Session() as session:
         for message in kafka_consumer:
             logger.warning(f"Message received: {message.value}")
+            if not is_valid_consumer_message(message.value):
+                continue
             session.execute(
                 "INSERT INTO website_metrics(url, content, response_time, code) VALUES (%s, %s, %s, %s)",
                 (

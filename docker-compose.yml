@@ -16,7 +16,7 @@ services:
       POSTGRES_DB: aiven_default
     networks:
       - default
-    command: ["python", "consumer.py"]
+    command: ["python", "consumer_run.py"]
     restart: on-failure:5
     volumes:
       - .:/app
@@ -30,7 +30,7 @@ services:
       - .env
     networks:
       - default
-    command: ["python", "producer.py"]
+    command: ["python", "producer_run.py"]
     volumes:
       - .:/app
 

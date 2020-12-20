@@ -4,7 +4,7 @@ services:
   consume:
     build:
       context: .
-      target: local
+      target: test
       dockerfile: consumer/Dockerfile
     depends_on:
       - db
@@ -20,7 +20,7 @@ services:
   produce:
     build:
       context: .
-      target: local
+      target: test
       dockerfile: producer/Dockerfile
     networks:
       - default

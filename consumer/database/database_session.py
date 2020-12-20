@@ -4,6 +4,7 @@ from typing import Any
 from typing import Iterable
 from typing import Optional
 from typing import Tuple
+from typing import List
 
 import psycopg2
 
@@ -14,7 +15,7 @@ class Session:
         self._connection = None
         self._cursor = None
 
-    def fetch_all(self, sql: str, values: Optional[Iterable[Any]] = None) -> Tuple[Any]:
+    def fetch_all(self, sql: str, values: Optional[Iterable[Any]] = None) -> List[Tuple[Any]]:
         self.execute(sql, values)
         return self._cursor.fetchall()
 

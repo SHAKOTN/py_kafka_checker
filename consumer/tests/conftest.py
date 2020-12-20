@@ -56,3 +56,23 @@ def consumer_mocked(mocker):
             })
         ]
     )
+
+@pytest.fixture
+def consumer_mocked_multiple_messages(mocker):
+    mocker.patch(
+        "consumer.consumer.KafkaConsumer",
+        return_value=[
+            MagicMock(value={
+                'url': 'https://www.google.com/',
+                'content': '<!doctype html><html itemscope=""',
+                'response_time': 0.152716,
+                'code': 200
+            }),
+            MagicMock(value={
+                'url': 'https://www.github.com/',
+                'content': 'INTERNAL SERVER ERROR',
+                'response_time': 1.24,
+                'code': 500
+            })
+        ]
+    )
