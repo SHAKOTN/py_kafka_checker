@@ -19,9 +19,6 @@ jobs:
     - name: Login to DockerHub
       run: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
-    - name: Add dummy certificates dir
-      run: mkdir certificates
-
     - name: Build docker images
       run: docker-compose -f docker-compose-ci.yml build
 
