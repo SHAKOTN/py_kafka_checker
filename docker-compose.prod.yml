@@ -6,9 +6,29 @@ services:
       context: .
       target: production
       dockerfile: consumer/Dockerfile
+    env_file:
+      - .env
+    command: ["python", "consumer_run.py"]
+    restart: on-failure:5
+
+  migrate:
+    build:
+      context: .
+      target: test
+      dockerfile: consumer/Dockerfile
+    env_file:
+      - .env
+    command: python consumer/database/migrate.py
+    restart: on-failure:5
+    depends_on:
+      - db
 
   produce:
     build:
       context: .
       target: production
       dockerfile: consumer/Dockerfile
+    env_file:
+      - .env
+    command: ["python", "producer_run.py"]
+    restart: on-failure:5

@@ -1,5 +1,8 @@
+import logging
+
 from consumer.database.database_session import Session
 
+logger = logging.getLogger(__name__)
 
 def migrate_metrics_table():
     create_table_query = """
@@ -28,3 +31,7 @@ def drop_metrics_table():
         session.execute("drop table if exists website_metrics;")
         session.execute("drop index if exists url_status_code_idx;")
         session.commit()
+
+if __name__ == '__main__':
+    logger.warning("!!!Migrating database!!!")
+    migrate_metrics_table()
