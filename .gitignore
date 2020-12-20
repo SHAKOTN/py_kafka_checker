@@ -1,6 +1,5 @@
 /postgres-data/
 .pytest_cache/
-/certificates/
 *.pyc
 *.pyo
 *.scssc
@@ -36,3 +35,6 @@ dmypy.json
 .ipynb_checkpoints/
 *.ipynb
 /.gtm/
+/certificates/ca.pem
+/certificates/service.cert
+/certificates/service.key
