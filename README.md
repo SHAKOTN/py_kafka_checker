@@ -130,6 +130,6 @@ In order to run project, ENV variables should be specified in `.env` file:
 ## What can be improved?
 - Split into two repos
 - Utilize Kafka+Zookeeper locally for smoother development process, so Aiven service will be used only in production
-- If needed, expand migration in database, so users can write their SQL migrations and script `migrate.py` will execute them in dependant order
+- If needed, expand migration in database, so users can write their SQL migrations and script `migrate.py` will execute them in dependant order by using revisions
 
 ---
