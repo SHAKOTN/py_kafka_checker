@@ -1,5 +1,5 @@
 import logging
-from producer.producer import produce_messages
+from producer import produce_messages
 
 logging.basicConfig(level=logging.WARNING)
 

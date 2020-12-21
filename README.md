@@ -14,8 +14,9 @@
 Name                                         Stmts   Miss  Cover
 ----------------------------------------------------------------
 consumer/__init__.py                             0      0   100%
-consumer/consumer.py                            18      0   100%
-consumer/database/__init__.py                    2      0   100%
+consumer/constants.py                            6      0   100%
+consumer/consumer.py                            24      0   100%
+consumer/database/__init__.py                    4      0   100%
 consumer/database/database_session.py           36      0   100%
 consumer/database/migrate.py                    18      2    89%
 consumer/message_validator.py                   10      0   100%
@@ -23,11 +24,12 @@ consumer/tests/__init__.py                       0      0   100%
 consumer/tests/conftest.py                      28      0   100%
 consumer/tests/test_consume.py                  32      0   100%
 consumer/tests/test_message_validator.py         5      0   100%
+consumer/tests/test_migrate.py                  14      0   100%
 consumer/tests/test_session_integration.py      31      0   100%
 consumer/tests/test_session_units.py            29      0   100%
 consumer_run.py                                  5      5     0%
 ----------------------------------------------------------------
-TOTAL                                          214      7    97%
+TOTAL                                          242      7    97%
 ```
 
 #### Producer:
@@ -35,8 +37,9 @@ TOTAL                                          214      7    97%
 Name                              Stmts   Miss  Cover
 -----------------------------------------------------
 producer/__init__.py                  0      0   100%
-producer/producer.py                 18      4    78%
-producer/site_crawler.py             18      3    83%
+producer/constants.py                 6      0   100%
+producer/producer.py                 23      4    83%
+producer/site_crawler.py             19      3    84%
 producer/site_metadata.py             7      0   100%
 producer/tests/__init__.py            0      0   100%
 producer/tests/test_crawler.py       29      1    97%
@@ -44,7 +47,7 @@ producer/tests/test_producer.py      11      0   100%
 producer/utils.py                     7      0   100%
 producer_run.py                       5      5     0%
 -----------------------------------------------------
-TOTAL                                95     13    86%
+TOTAL                               107     13    88%
 ```
 
 ---
@@ -68,11 +71,14 @@ $ make run_production
 
 ## Overview
 ### Project Structure
-There are two separate docker services with own Dockerfiles and build instructions: `consume` and `produce`. They
-also have their own dependencies, because `produce` doesn't need database to generate messages
+Two separate docker services with own Dockerfiles and build instructions: `consume` and `produce`.
+
+There is also a service which is responsible for initializing database - `migrate`. 
+
+They also have their own dependencies, because `produce` doesn't need database to generate messages
 
 It's not optimal and I would have two different repos for each service, but I think that would be too much for this 
-assignment. Also, it saves time for DevOps work
+assignment. Also, it saves time doing DevOps work
 
 - Service `consume` consists of: database session implementation, 
   migrations  logic, Kafka consumer listening to kafka topic
@@ -118,5 +124,12 @@ In order to run project, ENV variables should be specified in `.env` file:
 - POSTGRES_DB
 - POSTGRES_PORT
 - POSTGRES_HOST
+
+---
+
+## What can be improved?
+- Split into two repos
+- Utilize Kafka+Zookeeper locally for smoother development process, so Aiven service will be used only in production
+- If needed, expand migration in database, so users can write their SQL migrations and script `migrate.py` will execute them in dependant order
 
 ---

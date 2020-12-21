@@ -1,0 +1,6 @@
+KAFKA_TOPIC = "KAFKA_TOPIC"
+KAFKA_HOST = "KAFKA_HOST"
+WEBSITE_CONTENT_REGEX_ENV = "WEBSITE_CONTENT_REGEX"
+SSL_CAFILE = "certificates/ca.pem"
+SSL_CERTFILE = "certificates/service.cert"
+SSL_KEY = "certificates/service.key"

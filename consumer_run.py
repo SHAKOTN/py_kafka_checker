@@ -1,5 +1,5 @@
 import logging
-from consumer.consumer import consume_messages
+from consumer import consume_messages
 
 logging.basicConfig(level=logging.WARNING)
 

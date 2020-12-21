@@ -29,12 +29,12 @@ class Session:
     def commit(self) -> None:
         self._connection.commit()
 
-    def __enter__(self):
+    def __enter__(self) -> "Session":
         if not self._connection:
             self._connect()
         return self
 
-    def __exit__(self, exception_type, exception_value, trace):
+    def __exit__(self, exception_type, exception_value, trace) -> None:
         # Exit is transactional, in case of any exception:
         # All not committed changes will be rolled back
         if exception_type is not None:

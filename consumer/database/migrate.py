@@ -4,7 +4,7 @@ from consumer.database.database_session import Session
 
 logger = logging.getLogger(__name__)
 
-def migrate_metrics_table():
+def migrate_metrics_table() -> None:
     create_table_query = """
         create table if not exists 
         website_metrics(
