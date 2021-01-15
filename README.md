@@ -1,4 +1,5 @@
 ## Kafka Consumer/Producer and Site Checker
+Simple consumer-producer application to check websites and utilize Kafka to send metatata and store it to database
 
 ---
 
